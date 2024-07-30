@@ -6,6 +6,7 @@ body {
     background-size: cover;
     color: #333;
     position: relative;
+    overflow: hidden;
 }
 
 .container {
@@ -22,24 +23,6 @@ header, footer {
     color: white;
     padding: 10px 0;
     text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
 }
 
 h1, h2 {
@@ -62,14 +45,6 @@ button:hover {
     background-color: #555;
 }
 
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
 .modal {
     display: none;
     position: fixed;
@@ -80,17 +55,18 @@ button:hover {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.5s ease;
 }
 
 .modal-content {
     background-color: white;
-    margin: 10% auto;
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
     border-radius: 10px;
     text-align: center;
-    position: relative;
+    animation: fadeIn 0.5s;
 }
 
 .close {
@@ -98,45 +74,40 @@ button:hover {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .close:hover,
 .close:focus {
     color: black;
     text-decoration: none;
-    cursor: pointer;
 }
 
-.bug {
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.firefly {
     position: absolute;
     width: 10px;
     height: 10px;
-    background-color: yellow;
+    background: yellow;
     border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    animation: fly 2s infinite;
+    text-align: center;
+    color: black;
+    line-height: 10px;
+    cursor: pointer;
+    animation: move 5s linear infinite, blink 1.5s linear infinite;
 }
 
-.bug:nth-child(2) {
-    animation-delay: 0.5s;
+@keyframes move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(calc(100vw - 10px), calc(100vh - 10px)); }
 }
 
-.bug:nth-child(3) {
-    animation-delay: 1s;
-}
-
-@keyframes fly {
-    0% {
-        transform: translateY(0) translateX(0);
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(-100px) translateX(50px);
-        opacity: 0.5;
-    }
-    100% {
-        transform: translateY(0) translateX(0);
-        opacity: 1;
-    }
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
 }
 
