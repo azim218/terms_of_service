@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background: url('background.png') no-repeat center center fixed;
-    background-size: cover; /* Используем cover для фона на весь экран */
+    background-size: cover; /* Фон на весь экран */
     color: #333;
     position: relative;
     overflow: hidden;
@@ -82,7 +82,7 @@ button:hover {
     color: black;
     line-height: 50px; /* Выравниваем текст по центру */
     cursor: pointer;
-    animation: move 30s linear infinite, blink 2s linear infinite;
+    animation: move 20s linear infinite, blink 2s linear infinite;
     box-shadow: 0 0 20px yellow; /* Добавляем свечение */
     font-size: 16px; /* Увеличиваем размер шрифта */
     font-weight: bold; /* Делаем текст более заметным */
@@ -90,7 +90,10 @@ button:hover {
 
 @keyframes move {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(200vw, 200vh); }
+    25% { transform: translate(calc(100vw - 50px), 0); }
+    50% { transform: translate(calc(100vw - 50px), calc(100vh - 50px)); }
+    75% { transform: translate(0, calc(100vh - 50px)); }
+    100% { transform: translate(0, 0); }
 }
 
 @keyframes blink {
