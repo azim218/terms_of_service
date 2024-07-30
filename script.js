@@ -1,42 +1,44 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    var modal = document.getElementById("modal");
-    var close = document.getElementsByClassName("close")[0];
+    var modals = document.querySelectorAll('.modal');
+    var spans = document.querySelectorAll('.close');
+    var backButtons = document.querySelectorAll('.back-button');
 
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            showModal(this.getAttribute('data-section'));
-        });
+    spans.forEach(span => {
+        span.onclick = function () {
+            modals.forEach(modal => modal.style.display = "none");
+        }
     });
 
-    close.onclick = function () {
-        modal.style.display = "none";
-    }
+    backButtons.forEach(button => {
+        button.onclick = function () {
+            modals.forEach(modal => modal.style.display = "none");
+        }
+    });
 
     window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
         }
     }
 
-    function showModal(section) {
-        const modalBody = document.getElementById('modal-body');
-        const sections = {
-            'rules': '<h2>Основные правила</h2><ul><li>Не используйте бота для спама.</li><li>Не пытайтесь взломать или обойти ограничения бота.</li><li>Соблюдайте уважение и корректность в общении с ботом и другими пользователями.</li><li>Нельзя использовать бота для получения информации, которая противоречит законам вашей страны.</li></ul>',
-            'contact': '<h2>Контакты</h2><p>Discord: azim218</p><p>Email: emilazimmuk@gmail.com</p>',
-            'privacy': '<h2>Политика конфиденциальности</h2><p>Ваши данные будут защищены и не будут переданы третьим лицам без вашего согласия.</p><p>Для получения дополнительной информации свяжитесь с нами.</p>'
-        };
-        modalBody.innerHTML = sections[section];
-        modal.style.display = "block";
-    }
-
     // Добавление светлячков
-    const body = document.querySelector('body');
-    for (let i = 0; i < 3; i++) {
-        const bug = document.createElement('div');
-        bug.className = 'bug';
-        bug.style.top = Math.random() * 100 + '%';
-        bug.style.left = Math.random() * 100 + '%';
-        body.appendChild(bug);
-    }
+    const fireflies = [
+        { id: 'rulesModal', label: 'Правила' },
+        { id: 'privacyModal', label: 'Политика' },
+        { id: 'contactModal', label: 'Контакты' }
+    ];
+
+    fireflies.forEach((firefly, index) => {
+        let el = document.createElement('div');
+        el.className = 'firefly';
+        el.textContent = firefly.label;
+        el.style.top = `${Math.random() * window.innerHeight}px`;
+        el.style.left = `${Math.random() * window.innerWidth}px`;
+        el.style.animationDelay = `${index * 2}s`; // Задержка для анимации
+        el.onclick = function () {
+            document.getElementById(firefly.id).style.display = "block";
+        };
+        document.body.appendChild(el);
+    });
 });
+
