@@ -82,7 +82,7 @@ button:hover {
     color: black;
     line-height: 50px; /* Выравниваем текст по центру */
     cursor: pointer;
-    animation: move 20s linear infinite, blink 2s linear infinite;
+    animation: move 15s linear infinite, blink 2s linear infinite;
     box-shadow: 0 0 20px yellow; /* Добавляем свечение */
     font-size: 16px; /* Увеличиваем размер шрифта */
     font-weight: bold; /* Делаем текст более заметным */
@@ -90,10 +90,10 @@ button:hover {
 
 @keyframes move {
     0% { transform: translate(0, 0); }
-    25% { transform: translate(calc(100vw - 50px), 0); }
+    25% { transform: translate(calc(100vw - 50px), calc(0)); }
     50% { transform: translate(calc(100vw - 50px), calc(100vh - 50px)); }
-    75% { transform: translate(0, calc(100vh - 50px)); }
-    100% { transform: translate(0, 0); }
+    75% { transform: translate(calc(0), calc(100vh - 50px)); }
+    100% { transform: translate(calc(0), calc(0)); }
 }
 
 @keyframes blink {
