@@ -21,24 +21,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
-    // Добавление светлячков
-    const fireflies = [
-        { id: 'rulesModal', label: 'Правила' },
-        { id: 'privacyModal', label: 'Политика' },
-        { id: 'contactModal', label: 'Контакты' }
-    ];
-
-    fireflies.forEach((firefly, index) => {
-        let el = document.createElement('div');
-        el.className = 'firefly';
-        el.textContent = firefly.label;
-        el.style.top = `${Math.random() * (window.innerHeight - 20)}px`;
-        el.style.left = `${Math.random() * (window.innerWidth - 20)}px`;
-        el.style.animationDelay = `${index * 2}s`; // Задержка для анимации
-        el.onclick = function () {
-            document.getElementById(firefly.id).style.display = "block";
-        };
-        document.body.appendChild(el);
+    // Открытие модальных окон
+    const footerButtons = document.querySelectorAll('.footer-button');
+    footerButtons.forEach(button => {
+        button.onclick = function () {
+            var modalId = button.getAttribute('data-modal');
+            document.getElementById(modalId).style.display = "block";
+        }
     });
 });
 
