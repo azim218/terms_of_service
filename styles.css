@@ -72,23 +72,8 @@ button:hover {
     to { opacity: 1; }
 }
 
-.firefly {
-    position: absolute;
-    width: 50px; /* Увеличиваем размер светлячков */
-    height: 50px; /* Увеличиваем размер светлячков */
-    background: yellow;
-    border-radius: 50%;
-    text-align: center;
-    color: black;
-    line-height: 50px; /* Выравниваем текст по центру */
-    cursor: pointer;
-    box-shadow: 0 0 20px yellow; /* Добавляем свечение */
-    font-size: 16px; /* Увеличиваем размер шрифта */
-    font-weight: bold; /* Делаем текст более заметным */
-}
-
 footer {
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон для подвала */
+    background: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон для подвала */
     color: #fff;
     text-align: center;
     padding: 20px;
@@ -96,15 +81,50 @@ footer {
     bottom: 0;
     width: 100%;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.7); /* Эффект свечения подвала */
-    font-size: 24px; /* Увеличиваем размер шрифта */
-    font-weight: bold; /* Делаем текст жирным */
-    animation: glow 1.5s infinite alternate; /* Добавляем эффект свечения */
+}
+
+.footer-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.footer-button:hover {
+    background-color: #555;
+}
+
+footer .container {
+    display: flex;
+    justify-content: center;
+}
+
+footer .container button {
+    margin: 0 10px;
+}
+
+footer .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+footer .container button {
+    margin: 0 10px;
+    padding: 10px 20px;
 }
 
 @keyframes glow {
     0% { text-shadow: 0 0 10px rgba(255, 255, 0, 0.8); }
     100% { text-shadow: 0 0 20px rgba(255, 255, 0, 1); }
 }
+
 
 
 
