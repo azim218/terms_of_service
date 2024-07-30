@@ -3,56 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Правила использования бота</title>
+    <title>Мой Сайт</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Добавление фавикона -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Логотип сайта">
+        </div>
+    </header>
     <main>
-        <div id="rulesModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Основные правила</h2>
-                <ul>
-                    <li>Не используйте бота для спама.</li>
-                    <li>Не пытайтесь взломать или обойти ограничения бота.</li>
-                    <li>Соблюдайте уважение и корректность в общении с ботом и другими пользователями.</li>
-                    <li>Нельзя использовать бота для получения информации, которая противоречит законам вашей страны.</li>
-                </ul>
-                <button class="back-button">Назад</button>
-            </div>
-        </div>
-
-        <div id="privacyModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Политика конфиденциальности</h2>
-                <p>Здесь будет политика конфиденциальности...</p>
-                <button class="back-button">Назад</button>
-            </div>
-        </div>
-
-        <div id="contactModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Контакты</h2>
-                <p>Email: emilazimmuk@gmail.com</p>
-                <p>Discord: azim218</p>
-                <button class="back-button">Назад</button>
-            </div>
+        <h1>Добро пожаловать на мой сайт!</h1>
+        <div class="footer-buttons">
+            <button id="rulesButton">Правила</button>
+            <button id="privacyButton">Политика конфиденциальности</button>
+            <button id="contactButton">Контакты</button>
         </div>
     </main>
-
     <footer>
         <div class="container">
-            <button class="footer-button" data-modal="rulesModal">Правила</button>
-            <button class="footer-button" data-modal="privacyModal">Политика</button>
-            <button class="footer-button" data-modal="contactModal">Контакты</button>
+            <p>&copy; 2024 Volchara. Все права защищены.</p>
         </div>
     </footer>
+
+    <!-- Модальные окна -->
+    <div id="rulesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Основные правила</h2>
+            <ul>
+                <li>Не используйте бота для спама.</li>
+                <li>Не пытайтесь взломать или обойти ограничения бота.</li>
+                <li>Соблюдайте уважение и корректность в общении с ботом и другими пользователями.</li>
+                <li>Нельзя использовать бота для получения информации, которая противоречит законам вашей страны.</li>
+            </ul>
+            <button class="back-button">Назад</button>
+        </div>
+    </div>
+
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Политика конфиденциальности</h2>
+            <p>Здесь будет политика конфиденциальности...</p>
+            <button class="back-button">Назад</button>
+        </div>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Контакты</h2>
+            <p>Email: emilazimmuk@gmail.com</p>
+            <p>Discord: azim218</p>
+            <button class="back-button">Назад</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
