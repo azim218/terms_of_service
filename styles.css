@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: url('background.png') no-repeat center center fixed;
+    background: url('path/to/your/background.jpeg') no-repeat center center;
     background-size: cover;
     color: #333;
     position: relative;
@@ -81,24 +81,29 @@ button:hover {
 
 .firefly {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     background: yellow;
     border-radius: 50%;
     text-align: center;
     color: black;
-    line-height: 10px;
+    line-height: 20px;
     cursor: pointer;
-    animation: move 5s linear infinite, blink 1.5s linear infinite;
+    animation: move 10s linear infinite, blink 1.5s linear infinite;
+    box-shadow: 0 0 10px yellow;
 }
 
 @keyframes move {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(calc(100vw - 10px), calc(100vh - 10px)); }
+    25% { transform: translate(calc(100vw - 20px), 0); }
+    50% { transform: translate(calc(100vw - 20px), calc(100vh - 20px)); }
+    75% { transform: translate(0, calc(100vh - 20px)); }
+    100% { transform: translate(0, 0); }
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 0; }
+    0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
 }
+
 
