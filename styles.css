@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background: url('background.png') no-repeat center center fixed;
-    background-size: cover; /* Убедитесь, что фон заполняет весь экран */
+    background-size: cover;
     color: #333;
     position: relative;
     overflow: hidden;
@@ -61,8 +61,6 @@ footer {
 
 footer .container {
     margin: 0 auto;
-    font-size: 1.2em;
-    font-weight: bold; /* Сделать текст более заметным */
 }
 
 /* Стили для модальных окон */
@@ -76,7 +74,6 @@ footer .container {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
-    transition: opacity 0.5s ease;
 }
 
 .modal-content {
@@ -125,33 +122,6 @@ footer .container {
     to { opacity: 1; }
 }
 
-/* Стили для светлячков */
-.firefly {
-    position: absolute;
-    width: 30px; /* Сделать светлячков больше */
-    height: 30px;
-    background: yellow;
-    border-radius: 50%;
-    text-align: center;
-    color: black;
-    line-height: 30px;
-    cursor: pointer;
-    animation: move 20s linear infinite, blink 1.5s linear infinite;
-    box-shadow: 0 0 10px yellow; /* Добавить свечение */
-}
-
-@keyframes move {
-    0% { transform: translate(0, 0); }
-    25% { transform: translate(calc(100vw - 30px), 0); }
-    50% { transform: translate(calc(100vw - 30px), calc(100vh - 30px)); }
-    75% { transform: translate(0, calc(100vh - 30px)); }
-    100% { transform: translate(0, 0); }
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
 
 
 
