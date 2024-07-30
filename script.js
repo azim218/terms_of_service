@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         let el = document.createElement('div');
         el.className = 'firefly';
         el.textContent = firefly.label;
-        el.style.top = `${Math.random() * window.innerHeight}px`;
-        el.style.left = `${Math.random() * window.innerWidth}px`;
+        el.style.top = `${Math.random() * (window.innerHeight - 20)}px`;
+        el.style.left = `${Math.random() * (window.innerWidth - 20)}px`;
         el.style.animationDelay = `${index * 2}s`; // Задержка для анимации
         el.onclick = function () {
             document.getElementById(firefly.id).style.display = "block";
@@ -41,5 +41,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.body.appendChild(el);
     });
 });
+
 
 
