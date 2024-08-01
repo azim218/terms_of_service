@@ -5,12 +5,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var rulesButton = document.getElementById('rulesButton');
     var privacyButton = document.getElementById('privacyButton');
     var contactButton = document.getElementById('contactButton');
+    var supportButton = document.getElementById('supportButton');
     var mainContent = document.querySelector('main');
     var footer = document.querySelector('footer');
     var sendButton = document.getElementById('sendButton');
     var messageInput = document.getElementById('messageInput');
+    var supportForm = document.getElementById('supportForm');
+    var supportMessageInput = document.getElementById('supportMessage');
     
-    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на свой URL вебхука
+    const webhookUrl = 'https://discord.com/api/webhooks/`1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на свой URL вебхука
 
     // Функция для закрытия всех модальных окон
     function closeModals() {
@@ -51,6 +54,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mainContent.classList.add('blur');
         footer.classList.add('blur');
     };
+    supportButton.onclick = function () {
+        document.getElementById('supportModal').style.display = "block";
+        mainContent.classList.add('blur');
+        footer.classList.add('blur');
+    };
 
     // Функция для отправки сообщения в Discord через вебхук
     async function sendMessageToDiscord(message) {
@@ -86,6 +94,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
             sendMessageToDiscord(message);
         } else {
             console.log('Message is empty');
+        }
+    };
+
+    // Обработчик формы поддержки
+    supportForm.onsubmit = async function (event) {
+        event.preventDefault();
+        const supportMessage = supportMessageInput.value.trim();
+        if (supportMessage) {
+            await sendMessageToDiscord(supportMessage);
+            closeModals(); // Закрыть модальное окно после отправки сообщения
+        } else {
+            console.log('Support message is empty');
         }
     };
 });
