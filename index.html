@@ -27,6 +27,7 @@
             <button id="rulesButton">Правила</button>
             <button id="privacyButton">Политика конфиденциальности</button>
             <button id="contactButton">Контакты</button>
+            <button id="supportButton">Поддержка</button>
             <p>&copy; 2024 Volchara. Все права защищены.</p>
         </div>
     </footer>
@@ -65,9 +66,23 @@
         </div>
     </div>
 
+    <div id="supportModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Поддержка</h2>
+            <form id="supportForm">
+                <label for="supportMessage">Сообщение:</label>
+                <textarea id="supportMessage" name="message" required></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+            <button class="back-button">Назад</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
