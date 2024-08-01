@@ -6,6 +6,57 @@
     <title>Мой Сайт</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        /* Добавляем стили для чат-бокса */
+        #chat-container {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+        }
+
+        #chat-box {
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        #message-input {
+            width: calc(100% - 22px);
+            height: 40px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #send-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #send-button:hover {
+            background-color: #555;
+        }
+
+        .chat-message {
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -59,9 +110,19 @@
         </div>
     </div>
 
+    <!-- Чат с Discord-ботом -->
+    <div id="chat-container">
+        <div id="chat-box">
+            <!-- Сообщения будут отображаться здесь -->
+        </div>
+        <textarea id="message-input" placeholder="Напишите сообщение..."></textarea>
+        <button id="send-button">Отправить</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
