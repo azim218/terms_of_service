@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chat-box');
 
     // URL вебхука для отправки сообщений в Discord
-    const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';  // Замените на свой URL вебхука
+    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на свой URL вебхука
 
     // Функция для отправки сообщения через вебхук
     function sendMessageToDiscord(message) {
