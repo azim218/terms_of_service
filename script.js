@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     responseContainer.classList.add('response-container');
     mainContent.appendChild(responseContainer);
 
-    const webhookUrl = 'https://discord.com/api/webhooks/123456789012345678/your-webhook-token'; // Замените на свой URL вебхука
+    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz'; // Замените на свой URL вебхука
 
     // Функция для закрытия всех модальных окон
     function closeModals() {
