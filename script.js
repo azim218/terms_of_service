@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var messageInput = document.getElementById('messageInput');
     var supportForm = document.getElementById('supportForm');
     var supportMessageInput = document.getElementById('supportMessage');
-    
-    const webhookUrl = 'https://discord.com/api/webhooks/`1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на свой URL вебхука
+    var responseContainer = document.createElement('div'); // Контейнер для отображения ответов
+    responseContainer.classList.add('response-container');
+    mainContent.appendChild(responseContainer);
+
+    const webhookUrl = 'https://discord.com/api/webhooks/123456789012345678/your-webhook-token'; // Замените на свой URL вебхука
 
     // Функция для закрытия всех модальных окон
     function closeModals() {
@@ -81,9 +84,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
 
             console.log('Message sent successfully');
+            displayResponse('Сообщение отправлено успешно!');
             messageInput.value = ''; // Очистить поле ввода после отправки
         } catch (error) {
             console.error('Error sending message:', error);
+            displayResponse('Ошибка отправки сообщения. Попробуйте еще раз.');
         }
     }
 
@@ -108,7 +113,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.log('Support message is empty');
         }
     };
+
+    // Функция для отображения ответов
+    function displayResponse(response) {
+        const responseElement = document.createElement('p');
+        responseElement.textContent = response;
+        responseContainer.appendChild(responseElement);
+
+        // Автоматическая прокрутка вниз при добавлении нового ответа
+        responseContainer.scrollTop = responseContainer.scrollHeight;
+    }
 });
+
 
 
 
