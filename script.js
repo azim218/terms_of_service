@@ -1,53 +1,59 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    var modals = document.querySelectorAll('.modal');
-    var spans = document.querySelectorAll('.close');
-    var backButtons = document.querySelectorAll('.back-button');
-    var rulesButton = document.getElementById('rulesButton');
-    var privacyButton = document.getElementById('privacyButton');
-    var contactButton = document.getElementById('contactButton');
-    var mainContent = document.querySelector('main');
-    var footer = document.querySelector('footer');
+document.addEventListener('DOMContentLoaded', () => {
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const chatBox = document.getElementById('chat-box');
 
-    // Функция для закрытия всех модальных окон
-    function closeModals() {
-        modals.forEach(modal => modal.style.display = "none");
-        mainContent.classList.remove('blur');
-        footer.classList.remove('blur');
+    // URL вебхука для отправки сообщений в Discord
+    const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';  // Замените на свой URL вебхука
+
+    // Функция для отправки сообщения через вебхук
+    function sendMessageToDiscord(message) {
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Message sent to Discord:', data);
+            addMessageToChat(message, 'Вы');
+        })
+        .catch(error => {
+            console.error('Error sending message to Discord:', error);
+        });
     }
 
-    // Закрытие модальных окон при клике на крестик или кнопку "Назад"
-    spans.forEach(span => {
-        span.onclick = closeModals;
-    });
+    // Функция для добавления сообщения в чат
+    function addMessageToChat(message, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message');
+        messageDiv.textContent = `${sender}: ${message}`;
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;  // Прокрутка вниз
+    }
 
-    backButtons.forEach(button => {
-        button.onclick = closeModals;
-    });
-
-    // Закрытие модальных окон при клике за пределами модального окна
-    window.onclick = function (event) {
-        if (event.target.classList.contains('modal')) {
-            closeModals();
+    // Обработка нажатия кнопки "Отправить"
+    sendButton.addEventListener('click', () => {
+        const message = messageInput.value.trim();
+        if (message) {
+            sendMessageToDiscord(message);
+            messageInput.value = '';  // Очистка поля ввода
         }
-    }
+    });
 
-    // Открытие соответствующих модальных окон с размытием фона
-    rulesButton.onclick = function () {
-        document.getElementById('rulesModal').style.display = "block";
-        mainContent.classList.add('blur');
-        footer.classList.add('blur');
-    };
-    privacyButton.onclick = function () {
-        document.getElementById('privacyModal').style.display = "block";
-        mainContent.classList.add('blur');
-        footer.classList.add('blur');
-    };
-    contactButton.onclick = function () {
-        document.getElementById('contactModal').style.display = "block";
-        mainContent.classList.add('blur');
-        footer.classList.add('blur');
-    };
+    // Обработка нажатия клавиши "Enter" для отправки сообщений
+    messageInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendButton.click();
+        }
+    });
 });
+
 
 
 
