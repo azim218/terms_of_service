@@ -1,176 +1,129 @@
-/* Стили для основного тела страницы */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: url('background.png') no-repeat center center fixed;
-    background-size: cover;
-    color: #333;
-    position: relative;
-    overflow: hidden;
-}
+document.addEventListener('DOMContentLoaded', (event) => {
+    var modals = document.querySelectorAll('.modal');
+    var spans = document.querySelectorAll('.close');
+    var backButtons = document.querySelectorAll('.back-button');
+    var rulesButton = document.getElementById('rulesButton');
+    var privacyButton = document.getElementById('privacyButton');
+    var contactButton = document.getElementById('contactButton');
+    var supportButton = document.getElementById('supportButton');
+    var mainContent = document.querySelector('main');
+    var footer = document.querySelector('footer');
+    var sendButton = document.getElementById('sendButton');
+    var messageInput = document.getElementById('messageInput');
+    var supportForm = document.getElementById('supportForm');
+    var supportMessageInput = document.getElementById('supportMessage');
+    var responseContainer = document.createElement('div'); // Контейнер для отображения ответов
+    responseContainer.classList.add('response-container');
+    mainContent.appendChild(responseContainer);
 
-/* Стили для заголовка */
-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-}
+    const webhookUrl = 'https://discord.com/api/webhooks/123456789012345678/your-webhook-token'; // Замените на свой URL вебхука
 
-.logo img {
-    max-height: 50px; /* Максимальная высота логотипа */
-    width: auto;      /* Автоматическая ширина для сохранения пропорций */
-}
+    // Функция для закрытия всех модальных окон
+    function closeModals() {
+        modals.forEach(modal => modal.style.display = "none");
+        mainContent.classList.remove('blur');
+        footer.classList.remove('blur');
+    }
 
-/* Стили для основного содержимого */
-main {
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 80px; /* Добавлен отступ для поля ввода сообщений */
-}
+    // Закрытие модальных окон при клике на крестик или кнопку "Назад"
+    spans.forEach(span => {
+        span.onclick = closeModals;
+    });
 
-.blur {
-    filter: blur(5px);
-}
+    backButtons.forEach(button => {
+        button.onclick = closeModals;
+    });
 
-/* Стили для футера */
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #333;
-    color: white;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 100;
-}
+    // Закрытие модальных окон при клике за пределами модального окна
+    window.onclick = function (event) {
+        if (event.target.classList.contains('modal')) {
+            closeModals();
+        }
+    }
 
-footer .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
+    // Открытие соответствующих модальных окон с размытием фона
+    rulesButton.onclick = function () {
+        document.getElementById('rulesModal').style.display = "block";
+        mainContent.classList.add('blur');
+        footer.classList.add('blur');
+    };
+    privacyButton.onclick = function () {
+        document.getElementById('privacyModal').style.display = "block";
+        mainContent.classList.add('blur');
+        footer.classList.add('blur');
+    };
+    contactButton.onclick = function () {
+        document.getElementById('contactModal').style.display = "block";
+        mainContent.classList.add('blur');
+        footer.classList.add('blur');
+    };
+    supportButton.onclick = function () {
+        document.getElementById('supportModal').style.display = "block";
+        mainContent.classList.add('blur');
+        footer.classList.add('blur');
+    };
 
-footer button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #555;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1rem;
-}
+    // Функция для отправки сообщения в Discord через вебхук
+    async function sendMessageToDiscord(message) {
+        try {
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: message
+                })
+            });
 
-footer button:hover {
-    background-color: #777;
-}
+            // Проверка на статус ответа
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error sending message:', errorText);
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
-/* Стили для модальных окон */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 101;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-}
+            console.log('Message sent successfully');
+            displayResponse('Сообщение отправлено успешно!');
+            messageInput.value = ''; // Очистить поле ввода после отправки
+        } catch (error) {
+            console.error('Error sending message:', error);
+            displayResponse('Ошибка отправки сообщения. Попробуйте еще раз.');
+        }
+    }
 
-.modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    border-radius: 10px;
-    text-align: center;
-    animation: fadeIn 0.5s;
-}
+    // Отправка сообщения при нажатии на кнопку
+    sendButton.onclick = function () {
+        const message = messageInput.value.trim();
+        if (message) {
+            sendMessageToDiscord(message);
+        } else {
+            console.log('Message is empty');
+        }
+    };
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
+    // Обработчик формы поддержки
+    supportForm.onsubmit = async function (event) {
+        event.preventDefault();
+        const supportMessage = supportMessageInput.value.trim();
+        if (supportMessage) {
+            await sendMessageToDiscord(supportMessage);
+            closeModals(); // Закрыть модальное окно после отправки сообщения
+        } else {
+            console.log('Support message is empty');
+        }
+    };
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-}
+    // Функция для отображения ответов
+    function displayResponse(response) {
+        const responseElement = document.createElement('p');
+        responseElement.textContent = response;
+        responseContainer.appendChild(responseElement);
 
-.back-button {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.back-button:hover {
-    background-color: #555;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Стили для формы чата */
-.chat-container {
-    position: fixed;
-    bottom: 80px; /* Учитываем высоту футера и отступы */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 500px;
-    background-color: white;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 200;
-}
-
-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1rem;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #555;
-}
+        // Автоматическая прокрутка вниз при добавлении нового ответа
+        responseContainer.scrollTop = responseContainer.scrollHeight;
+    }
+});
 
 
 
