@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var supportMessageInput = document.getElementById('supportMessageInput');
     var supportResponseContainer = document.getElementById('supportResponseContainer');
 
-    const webhookUrl = 'https://discord.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN';  // Замените на актуальный URL вебхука
+    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на актуальный URL вебхука
 
     function closeModals() {
         modals.forEach(modal => modal.style.display = "none");
