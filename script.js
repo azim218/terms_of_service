@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    var modals = document.querySelectorAll('.modal');
-    var spans = document.querySelectorAll('.close');
-    var backButtons = document.querySelectorAll('.back-button');
-    var rulesButton = document.getElementById('rulesButton');
-    var privacyButton = document.getElementById('privacyButton');
-    var contactButton = document.getElementById('contactButton');
-    var supportButton = document.getElementById('supportButton');
-    var mainContent = document.querySelector('main');
-    var footer = document.querySelector('footer');
-    var sendButton = document.getElementById('sendButton');
-    var messageInput = document.getElementById('messageInput');
+    const modals = document.querySelectorAll('.modal');
+    const spans = document.querySelectorAll('.close');
+    const backButtons = document.querySelectorAll('.back-button');
+    const rulesButton = document.getElementById('rulesButton');
+    const privacyButton = document.getElementById('privacyButton');
+    const contactButton = document.getElementById('contactButton');
+    const supportButton = document.getElementById('supportButton');
+    const mainContent = document.querySelector('main');
+    const footer = document.querySelector('footer');
+    const sendButton = document.getElementById('sendButton');
+    const messageInput = document.getElementById('messageInput');
     
-    var supportSendButton = document.getElementById('supportSendButton');
-    var supportMessageInput = document.getElementById('supportMessageInput');
-    var supportResponse = document.getElementById('supportResponse');
+    const supportSendButton = document.getElementById('supportSendButton');
+    const supportMessageInput = document.getElementById('supportMessageInput');
+    const supportResponse = document.getElementById('supportResponse');
     
     const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на свой URL вебхука
 
@@ -46,16 +46,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mainContent.classList.add('blur');
         footer.classList.add('blur');
     };
+    
     privacyButton.onclick = function () {
         document.getElementById('privacyModal').style.display = "block";
         mainContent.classList.add('blur');
         footer.classList.add('blur');
     };
+    
     contactButton.onclick = function () {
         document.getElementById('contactModal').style.display = "block";
         mainContent.classList.add('blur');
         footer.classList.add('blur');
     };
+    
     supportButton.onclick = function () {
         document.getElementById('supportModal').style.display = "block";
         mainContent.classList.add('blur');
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            // Пытаемся получить JSON, если он есть
+            // Получаем текст ответа, если он есть
             const responseData = await response.text();
             return responseData;  // Возвращаем текстовый ответ
         } catch (error) {
@@ -98,6 +101,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const response = await sendMessageToDiscord(message);
             if (response) {
                 console.log('Response from Discord bot:', response);
+            } else {
+                console.log('Error or empty response');
             }
             messageInput.value = ''; // Очистить поле ввода после отправки
         } else {
@@ -110,18 +115,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const message = supportMessageInput.value.trim();
         if (message) {
             const response = await sendMessageToDiscord(message);
-            if (response) {
-                if (supportResponse) {
+            if (supportResponse) {
+                if (response) {
                     supportResponse.textContent = 'Ответ от бота: ' + response;
                 } else {
-                    console.error('Support response element not found.');
+                    supportResponse.textContent = 'Ошибка при получении ответа.';
                 }
             } else {
-                if (supportResponse) {
-                    supportResponse.textContent = 'Ошибка при получении ответа.';
-                } else {
-                    console.error('Support response element not found.');
-                }
+                console.error('Support response element not found.');
             }
             supportMessageInput.value = ''; // Очистить поле ввода после отправки
         } else {
@@ -133,6 +134,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     };
 });
+
 
 
 
