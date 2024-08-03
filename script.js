@@ -82,8 +82,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            console.log('Message sent successfully');
-            return await response.json();
+            // Пытаемся получить JSON, если он есть
+            const responseData = await response.text();
+            return responseData;  // Возвращаем текстовый ответ
         } catch (error) {
             console.error('Error sending message:', error);
             return null;  // Возвращаем null в случае ошибки
@@ -96,7 +97,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (message) {
             const response = await sendMessageToDiscord(message);
             if (response) {
-                // Можно добавить обработку ответа от бота здесь
                 console.log('Response from Discord bot:', response);
             }
             messageInput.value = ''; // Очистить поле ввода после отправки
@@ -111,16 +111,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (message) {
             const response = await sendMessageToDiscord(message);
             if (response) {
-                supportResponse.textContent = 'Ответ от бота: ' + response.content; // Предполагаем, что ответ от бота возвращает контент
+                if (supportResponse) {
+                    supportResponse.textContent = 'Ответ от бота: ' + response;
+                } else {
+                    console.error('Support response element not found.');
+                }
             } else {
-                supportResponse.textContent = 'Ошибка при получении ответа.';
+                if (supportResponse) {
+                    supportResponse.textContent = 'Ошибка при получении ответа.';
+                } else {
+                    console.error('Support response element not found.');
+                }
             }
             supportMessageInput.value = ''; // Очистить поле ввода после отправки
         } else {
-            supportResponse.textContent = 'Сообщение пустое.';
+            if (supportResponse) {
+                supportResponse.textContent = 'Сообщение пустое.';
+            } else {
+                console.error('Support response element not found.');
+            }
         }
     };
 });
+
 
 
 
