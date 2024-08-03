@@ -10,13 +10,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var footer = document.querySelector('footer');
     var sendButton = document.getElementById('sendButton');
     var messageInput = document.getElementById('messageInput');
+    
     var supportSendButton = document.getElementById('supportSendButton');
     var supportMessageInput = document.getElementById('supportMessageInput');
-    var supportResponse = document.getElementById### JavaScript (продолжение)
-
-```javascript
-    ('supportResponse');
-
+    var supportResponse = document.getElementById('supportResponse');
+    
     const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на свой URL вебхука
 
     // Функция для закрытия всех модальных окон
