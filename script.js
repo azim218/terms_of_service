@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const supportMessageInput = document.getElementById('supportMessageInput');
     const supportResponse = document.getElementById('supportResponse');
 
-    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns';
+    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';
     
     // Функция для открытия модального окна
     function openModal(modalId) {
