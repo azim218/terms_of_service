@@ -10,60 +10,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const footer = document.querySelector('footer');
     const sendButton = document.getElementById('sendButton');
     const messageInput = document.getElementById('messageInput');
-    
     const supportSendButton = document.getElementById('supportSendButton');
     const supportMessageInput = document.getElementById('supportMessageInput');
     const supportResponse = document.getElementById('supportResponse');
-    
-    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns7m3Ju-tY1t_jk6v0qYz';  // Замените на свой URL вебхука
 
-    // Функция для закрытия всех модальных окон
-    function closeModals() {
-        modals.forEach(modal => modal.style.display = "none");
+    const webhookUrl = 'https://discord.com/api/webhooks/1268558798696480861/0chltrwLyEZdNZuWuyVkOLTM9b-y-NW610UxG29troQNNqLns';
+    
+    // Функция для открытия модального окна
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'block';
+        mainContent.classList.add('blur');
+        footer.classList.add('blur');
+    }
+
+    // Функция для закрытия модального окна
+    function closeModal(modal) {
+        modal.style.display = 'none';
         mainContent.classList.remove('blur');
         footer.classList.remove('blur');
     }
 
-    // Закрытие модальных окон при клике на крестик или кнопку "Назад"
-    spans.forEach(span => {
-        span.onclick = closeModals;
-    });
+    // Обработчики кликов по кнопкам
+    rulesButton.addEventListener('click', () => openModal('rulesModal'));
+    privacyButton.addEventListener('click', () => openModal('privacyModal'));
+    contactButton.addEventListener('click', () => openModal('contactModal'));
+    supportButton.addEventListener('click', () => openModal('supportModal'));
 
-    backButtons.forEach(button => {
-        button.onclick = closeModals;
-    });
-
-    // Закрытие модальных окон при клике за пределами модального окна
-    window.onclick = function (event) {
-        if (event.target.classList.contains('modal')) {
-            closeModals();
-        }
-    }
-
-    // Открытие соответствующих модальных окон с размытием фона
-    rulesButton.onclick = function () {
-        document.getElementById('rulesModal').style.display = "block";
-        mainContent.classList.add('blur');
-        footer.classList.add('blur');
-    };
-    
-    privacyButton.onclick = function () {
-        document.getElementById('privacyModal').style.display = "block";
-        mainContent.classList.add('blur');
-        footer.classList.add('blur');
-    };
-    
-    contactButton.onclick = function () {
-        document.getElementById('contactModal').style.display = "block";
-        mainContent.classList.add('blur');
-        footer.classList.add('blur');
-    };
-    
-    supportButton.onclick = function () {
-        document.getElementById('supportModal').style.display = "block";
-        mainContent.classList.add('blur');
-        footer.classList.add('blur');
-    };
+    // Обработчики кликов по кнопкам закрытия и кнопкам назад
+    spans.forEach(span => span.addEventListener('click', () => {
+        const modal = span.closest('.modal');
+        closeModal(modal);
+    }));
+    backButtons.forEach(button => button.addEventListener('click', () => {
+        const modal = button.closest('.modal');
+        closeModal(modal);
+    }));
 
     // Функция для отправки сообщения в Discord через вебхук
     async function sendMessageToDiscord(message) {
@@ -73,67 +55,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    content: message
-                })
+                body: JSON.stringify({ content: message })
             });
 
-            // Проверка на статус ответа
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error('Error sending message:', errorText);
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                console.error('Ошибка при отправке сообщения:', errorText);
+                return 'Ошибка при отправке сообщения';
             }
 
-            // Получаем текст ответа, если он есть
             const responseData = await response.text();
-            return responseData;  // Возвращаем текстовый ответ
+            return responseData;
         } catch (error) {
-            console.error('Error sending message:', error);
-            return null;  // Возвращаем null в случае ошибки
+            console.error('Ошибка при выполнении запроса:', error);
+            return 'Ошибка при выполнении запроса';
         }
     }
 
-    // Отправка сообщения при нажатии на кнопку отправки чата
-    sendButton.onclick = async function () {
-        const message = messageInput.value.trim();
-        if (message) {
-            const response = await sendMessageToDiscord(message);
-            if (response) {
-                console.log('Response from Discord bot:', response);
-            } else {
-                console.log('Error or empty response');
-            }
-            messageInput.value = ''; // Очистить поле ввода после отправки
-        } else {
-            console.log('Message is empty');
-        }
-    };
-
-    // Отправка сообщения при нажатии на кнопку отправки поддержки
-    supportSendButton.onclick = async function () {
+    // Обработчик клика по кнопке отправки сообщения в поддержке
+    supportSendButton.addEventListener('click', async () => {
         const message = supportMessageInput.value.trim();
         if (message) {
             const response = await sendMessageToDiscord(message);
-            if (supportResponse) {
-                if (response) {
-                    supportResponse.textContent = 'Ответ от бота: ' + response;
-                } else {
-                    supportResponse.textContent = 'Ошибка при получении ответа.';
-                }
-            } else {
-                console.error('Support response element not found.');
-            }
+            supportResponse.textContent = 'Ответ от бота: ' + response;
             supportMessageInput.value = ''; // Очистить поле ввода после отправки
         } else {
-            if (supportResponse) {
-                supportResponse.textContent = 'Сообщение пустое.';
-            } else {
-                console.error('Support response element not found.');
-            }
+            supportResponse.textContent = 'Сообщение пустое.';
         }
-    };
+    });
+
+    // Обработчик клика по кнопке отправки сообщения в основной форме
+    sendButton.addEventListener('click', async () => {
+        const message = messageInput.value.trim();
+        if (message) {
+            const response = await sendMessageToDiscord(message);
+            console.log('Ответ от бота:', response); // Логируем ответ в консоль
+            messageInput.value = ''; // Очистить поле ввода после отправки
+        } else {
+            console.log('Сообщение пустое.');
+        }
+    });
 });
+
 
 
 
