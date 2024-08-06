@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    // Выбор элементов
     const modals = document.querySelectorAll('.modal');
     const spans = document.querySelectorAll('.close');
     const backButtons = document.querySelectorAll('.back-button');
@@ -9,10 +8,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const supportButton = document.getElementById('supportButton');
     const mainContent = document.querySelector('main');
     const footer = document.querySelector('footer');
+    const sendButton = document.getElementById('sendButton');
+    const messageInput = document.getElementById('messageInput');
+
     const supportSendButton = document.getElementById('supportSendButton');
     const supportMessageInput = document.getElementById('supportMessageInput');
     const supportResponse = document.getElementById('supportResponse');
-    
+
     // URL вашего API
     const apiUrl = 'http://localhost:5000/receive_message_from_site'; // Замените на URL вашего API
 
@@ -45,19 +47,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
         mainContent.classList.add('blur');
         footer.classList.add('blur');
     };
-    
+
     privacyButton.onclick = function () {
         document.getElementById('privacyModal').style.display = "block";
         mainContent.classList.add('blur');
         footer.classList.add('blur');
     };
-    
+
     contactButton.onclick = function () {
         document.getElementById('contactModal').style.display = "block";
         mainContent.classList.add('blur');
         footer.classList.add('blur');
     };
-    
+
     supportButton.onclick = function () {
         document.getElementById('supportModal').style.display = "block";
         mainContent.classList.add('blur');
@@ -72,9 +74,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    message: message
-                })
+                body: JSON.stringify({ message: message })
             });
 
             if (!response.ok) {
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             return await response.json();
         } catch (error) {
             console.error('Ошибка при отправке сообщения:', error);
-            return null;
+            return { error: 'Ошибка при отправке сообщения' };
         }
     }
 
@@ -95,18 +95,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const message = supportMessageInput.value.trim();
         if (message) {
             const response = await sendMessageToApi(message);
-            if (response && response.bot_message) {
-                supportResponse.textContent = `Ответ от бота: ${response.bot_message}`;
+            if (response && response.status) {
+                supportResponse.textContent = `Ответ от сервера: ${response.status}`;
+            } else if (response && response.error) {
+                supportResponse.textContent = `Ошибка: ${response.error}`;
             } else {
                 supportResponse.textContent = 'Ошибка или пустой ответ';
             }
             supportMessageInput.value = ''; // Очистить поле ввода после отправки
         } else {
-            supportResponse.textContent = 'Сообщение пустое, ничего не отправляем.';
+            console.log('Сообщение пустое, ничего не отправляем.');
+        }
+    };
+
+    // Отправка сообщения при нажатии на кнопку отправки из формы
+    sendButton.onclick = async function () {
+        const message = messageInput.value.trim();
+        if (message) {
+            const response = await sendMessageToApi(message);
+            if (response && response.status) {
+                // Можно добавить отображение ответа в интерфейсе, если нужно
+                console.log(`Ответ от сервера: ${response.status}`);
+            } else if (response && response.error) {
+                console.error(`Ошибка: ${response.error}`);
+            } else {
+                console.error('Ошибка или пустой ответ');
+            }
+            messageInput.value = ''; // Очистить поле ввода после отправки
+        } else {
+            console.log('Сообщение пустое, ничего не отправляем.');
         }
     };
 
 });
+
 
 
 
