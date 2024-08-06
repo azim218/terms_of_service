@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    // Выбор элементов
     const modals = document.querySelectorAll('.modal');
     const spans = document.querySelectorAll('.close');
     const backButtons = document.querySelectorAll('.back-button');
@@ -8,9 +9,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const supportButton = document.getElementById('supportButton');
     const mainContent = document.querySelector('main');
     const footer = document.querySelector('footer');
-    const sendButton = document.getElementById('sendButton');
-    const messageInput = document.getElementById('messageInput');
-    
     const supportSendButton = document.getElementById('supportSendButton');
     const supportMessageInput = document.getElementById('supportMessageInput');
     const supportResponse = document.getElementById('supportResponse');
@@ -104,7 +102,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
             supportMessageInput.value = ''; // Очистить поле ввода после отправки
         } else {
-            console.log('Сообщение пустое, ничего не отправляем.');
+            supportResponse.textContent = 'Сообщение пустое, ничего не отправляем.';
         }
     };
 
